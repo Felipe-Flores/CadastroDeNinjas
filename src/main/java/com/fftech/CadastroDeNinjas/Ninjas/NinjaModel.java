@@ -18,8 +18,12 @@ public class NinjaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String email;
     private int idade;
+
+    // essa anotação deixa a coluna como unica
+    @Column(unique = true)
+    private String email;
+
 
     // @ManyToOne um ninja tem uma unica missao
     @ManyToOne
