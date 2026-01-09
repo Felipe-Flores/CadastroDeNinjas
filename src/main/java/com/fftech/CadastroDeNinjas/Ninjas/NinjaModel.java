@@ -1,5 +1,6 @@
-package com.fftech.CadastroDeNinjas;
+package com.fftech.CadastroDeNinjas.Ninjas;
 
+import com.fftech.CadastroDeNinjas.Missoes.MissoesModel;
 import jakarta.persistence.*;
 
 // Entity tansforma uma classe em uma entidade do BD
@@ -13,7 +14,13 @@ public class NinjaModel {
     private Long id;
     private String nome;
     private String email;
-    int idade;
+    private int idade;
+
+    // @ManyToOne um ninja tem uma unica missao
+    @ManyToOne
+    @JoinColumn(name = "missoes_id") // Foreing Key ou Chave estrangeira
+    private MissoesModel missoes;
+
 
     public NinjaModel() {
     }
