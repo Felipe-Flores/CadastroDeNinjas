@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 
 //essa anotação ele mapea as rotas da aplicação
-@RequestMapping("missoe")
+@RequestMapping("/missoes")
 
 public class MissoesController {
 
     // Get -- Mandar uma requisição para mostrar as missoes
-    @GetMapping("/lista")
+    @GetMapping("/listar")
     public String listarMissoes() {
         return "Missoes listadas com sucesso";
     }
