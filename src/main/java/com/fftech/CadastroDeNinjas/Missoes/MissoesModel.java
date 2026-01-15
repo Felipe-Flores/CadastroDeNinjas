@@ -1,5 +1,6 @@
 package com.fftech.CadastroDeNinjas.Missoes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fftech.CadastroDeNinjas.Ninjas.NinjaModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,9 @@ public class MissoesModel {
 
     // @OneToMany Uma missao pode ter varios ninjas
     @OneToMany(mappedBy = "missoes")
+
+    //essa anotação ingnora o erro de serealização
+    @JsonIgnore
     private List<NinjaModel> ninjas;
 
 
