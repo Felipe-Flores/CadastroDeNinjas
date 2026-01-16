@@ -37,16 +37,11 @@ public class NinjaService {
 
     // Alterar ninja
     public NinjaModel alterarNinjaPorId(Long id, NinjaModel ninjaAtualizado){
-        Optional<NinjaModel> ninjaPorId = ninjaRepository.findById(id);
-        //*return ninjaPorId.orElse(null);*//*
-
-        if (ninjaPorId.isPresent()){
-            NinjaModel ninja = ninjaPorId.get();
-
-            ninja.setNome();
+        if (ninjaRepository.existsById(id)){
+            ninjaAtualizado.setId(id);
+            return ninjaRepository.save(ninjaAtualizado);
         }
-
-
+        return null;
     }
 
 

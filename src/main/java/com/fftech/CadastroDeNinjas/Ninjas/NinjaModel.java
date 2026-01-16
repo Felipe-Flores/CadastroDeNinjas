@@ -36,4 +36,8 @@ public class NinjaModel {
     @ManyToOne
     @JoinColumn(name = "missoes_id") // Foreing Key ou Chave estrangeira
     private MissoesModel missoes;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
