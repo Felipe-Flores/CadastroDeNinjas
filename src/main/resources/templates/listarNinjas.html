@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shinobi System - Lista de Ninjas</title>
+    <style>
+        /* Variáveis de Cores */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #95a5a6;
+            --danger: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --info: #3498db;
+            --light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f3;
+            margin: 0;
+            padding: 40px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Estilo da Tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        thead {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background-color: #f1f4f6;
+        }
+
+        /* Imagem do Ninja */
+        .ninja-img {
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--info);
+            padding: 2px;
+        }
+
+        /* Estilização dos Botões */
+        .btn-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .btn-detail { background-color: var(--info); }
+        .btn-edit { background-color: var(--warning); }
+        .btn-delete { background-color: var(--danger); }
+
+        /* Novo estilo para o botão Adicionar */
+        .btn-add {
+            background-color: var(--success);
+            padding: 12px 25px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Container para alinhar o botão abaixo da tabela */
+        .footer-actions {
+            display: flex;
+            justify-content: flex-start;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+        }
+
+        /* Badges de Rank e Missão */
+        .rank-badge {
+            background: #eee;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Ninja Management System</h1>
+
+    <div class="footer-actions">
+        <a th:href="@{/ninjas/ui/adicionar}" class="btn btn-add">
+            + Adicionar Novo Ninja
+        </a>
+    </div>
+
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Imagem</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Rank</th>
+            <th>Missão Ativa</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ninja : ${ninjas}">
+            <td th:text="${ninja.id}"></td>
+            <td>
+                <img th:src="${ninja.imgUrl}" class="ninja-img" width="50" height="50">
+            </td>
+            <td th:text="${ninja.nome}" style="font-weight: 600;"></td>
+            <td th:text="${ninja.idade} + ' anos'"></td>
+            <td><span class="rank-badge" th:text="${ninja.rank}"></span></td>
+            <td>
+                <div th:if="${ninja.missoes}">
+                    <strong th:text="${ninja.missoes.nome}"></strong><br>
+                    <small th:text="'Dificuldade: ' + ${ninja.missoes.dificuldade}"></small>
+                </div>
+                <span th:if="${ninja.missoes == null}" style="color: #999; font-style: italic;">Disponível</span>
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a th:href="@{/ninjas/ui/listar/{id}(id=${ninja.id})}"
+                       class="btn btn-detail">Ver Detalhe</a>
+                    <a th:href="@{/ninjas/ui/alterar/{id}(id=${ninja.id})}"
+                       class="btn btn-edit">Alterar</a>
+                    <a th:href="@{/ninjas/ui/deletar/{id}(id=${ninja.id})}"
+                       class="btn btn-delete"
+                       onclick="return confirm('Deseja realmente excluir este ninja?')">
+                        Deletar
+                    </a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+</body>
+</html>

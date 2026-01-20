@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Ninja - Shinobi System</title>
+    <style>
+        /* Variáveis de Cores Unificadas */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #95a5a6;
+            --danger: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --info: #3498db;
+            --light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f3;
+            margin: 0;
+            padding: 40px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 700px; /* Reduzi um pouco para ficar centralizado e elegante */
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .ninja-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Imagem do Ninja Estilizada */
+        .ninja-img-profile {
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--info);
+            padding: 3px;
+            width: 150px;
+            height: 150px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .ninja-nome {
+            color: var(--primary);
+            margin-top: 15px;
+            font-size: 24px;
+        }
+
+        /* Estilo das Informações */
+        .info-group {
+            border-top: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .info-group p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        .rank-badge {
+            background: var(--light);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            color: var(--primary);
+            border: 1px solid #ddd;
+        }
+
+        /* Tabela de Missões Moderna */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Botão Voltar Estilizado */
+        .btn-back {
+            display: block;
+            margin-top: 30px;
+            padding: 12px;
+            text-decoration: none;
+            color: white;
+            background-color: var(--secondary);
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background-color: var(--primary);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="ninja-header">
+        <h1>Ficha do Ninja</h1>
+        <img th:src="${ninja.imgUrl}" th:alt="${ninja.nome}" class="ninja-img-profile">
+        <h2 class="ninja-nome" th:text="${ninja.nome}"></h2>
+    </div>
+
+    <div class="info-group">
+        <p><strong>Email:</strong> <span th:text="${ninja.email}"></span></p>
+        <p><strong>Idade:</strong> <span th:text="${ninja.idade} + ' anos'"></span></p>
+        <p><strong>Rank:</strong> <span class="rank-badge" th:text="${ninja.rank}"></span></p>
+    </div>
+
+    <h3>Missões Atribuídas</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Nome da Missão</th>
+            <th>Dificuldade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="m : ${ninja.missoes}">
+            <td th:text="${m.nome}"></td>
+            <td th:text="${m.dificuldade}"></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(ninja.missoes)}">
+            <td colspan="2" style="text-align: center; color: #999;">Nenhuma missão encontrada.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/ninjas/ui/listar}" class="btn-back">Voltar para a Lista</a>
+</div>
+
+</body>
+</html>
